@@ -15,7 +15,7 @@
 
 <!-- Create a div where the graph will take place -->
 <div id="main"></div>
-<p>Data is pulled from <a href="https://forum.effectivealtruism.org/posts/nGrmemHzQvBpnXkNX/what-matters-to-shrimps-factors-affecting-shrimp-welfare-in#Conclusion"/>this spreadsheet</a> put together by TylerMaule. More information on the data collection process <a href="https://forum.effectivealtruism.org/posts/ZbaDmowkXbTBsxvHn/historical-ea-funding-data">here</a>.</p>
+<p>Data is pulled from <a href="https://docs.google.com/spreadsheets/d/1IeO7NIgZ-qfSTDyiAFSgH6dMn1xzb6hB2pVSdlBJZ88/edit#gid=1410797881"/>this spreadsheet</a> put together by TylerMaule. More information on the data collection process <a href="https://forum.effectivealtruism.org/posts/ZbaDmowkXbTBsxvHn/historical-ea-funding-data">here</a>.</p>
 
 <script>
 
@@ -32,12 +32,12 @@ const margin = {top: 40, right: 200, bottom: 30, left: 50},
 //Read the data
 d3.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vTPVzHXIbYR4FKCGZjkwKeVhEO8bS6E-_XqhrjYJdOO9aHCegtTLM7dLKRlcAJe_Gx85Kk599L6x26L/pub?gid=868931334&single=true&output=csv").then(function(data) {
 
+
     delete(data.columns);
     data.map(x => {
         x.Cause = x.Year;
-        x['2022'] = x['2022(est)'];
         delete(x.Year);
-        delete(x['2022(est)']);
+        delete(x['2023(est)']);
     })
     const orgs = [...new Set(data.map(x => x.Org))];
     const causes = [...new Set(data.map(x => x.Cause))];
