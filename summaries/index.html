@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3.js Google Sheet Visualization</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+
+<body>
+
+<script>
+    d3.csv('https://docs.google.com/spreadsheets/d/1_ZEDm-BWiBDalyhg4WyJdSq-K7N-7Rvk0zlFVL1vObE/export?format=csv&gid=1103477843&ouput=csv')
+        .then(function(data) {
+            
+            // Create EA Forum header and entries
+            d3.select("body").append("h1").text("EA Forum");
+            let eaForumData = data.filter(row => row.URL === "https://forum.effectivealtruism.org/graphql");
+            createEntries(eaForumData);
+
+            // Add a separation space
+            d3.select("body").append("br");
+
+            // Create Lesswrong header and entries
+            d3.select("body").append("h1").text("Lesswrong");
+            let lwData = data.filter(row => row.URL === "https://www.lesswrong.com/graphql");
+            createEntries(lwData);
+            
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+
+    function createEntries(dataSubset) {
+        dataSubset.forEach(function(row) {
+            // Create an H3 with an anchor for the title
+            d3.select("body")
+              .append("h3")
+              .append("a")
+              .attr("href", row.pageUrl)
+              .text(row.title);
+
+            // Add the author's name in italics
+            d3.select("body")
+              .append("i")
+              .text("by " + row.username);
+
+            // Add a break for spacing
+            d3.select("body").append("br");
+
+            // Add the summary
+            d3.select("body")
+              .append("p")
+              .text(row.summary);
+        });
+    }
+</script>
+
+</body>
+</html>
